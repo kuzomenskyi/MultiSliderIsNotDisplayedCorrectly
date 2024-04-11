@@ -6,17 +6,27 @@
 //
 
 import SwiftUI
+import MultiSlider
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        GeometryReader { geometry in
+            let size = geometry.size
+            
+            MultiValueSlider(value: $viewModel.distanceSelected, minimumValue: viewModel.distanceMin, maximumValue: viewModel.distanceMax)
+                .orientation(.horizontal)
+                .valueLabelColor(.gray)
+                .outerTrackColor(.gray)
+                .thumbTintColor(.blue)
+                .valueLabelFont(.systemFont(ofSize: 15))
+                .isHapticSnap(false)
+                .trackWidth(3)
+                .frame(width: size.width * 0.8, height: 100)
+                .padding(.horizontal, 42)
         }
-        .padding()
     }
+    
+    @StateObject private var viewModel: ContentVM = .mock
 }
 
 struct ContentView_Previews: PreviewProvider {
